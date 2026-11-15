@@ -7,6 +7,7 @@
     python run.py txt samples/acme_discovery_call.txt --hubspot --write
     python run.py fathom --recording-id 123456789 --hubspot --write
     python run.py resume output/<run>/latest.json --hubspot --write   # continue a saved run
+    python run.py show   output/<run>/01_buying_role_classification.json   # print a saved step, no API calls
 """
 from __future__ import annotations
 
@@ -65,7 +66,13 @@ def main(argv=None) -> int:
     rs.add_argument("--max-tokens", type=int, default=16000)
     rs.add_argument("--out", default=os.getenv("OUTPUT_DIR", "output"))
     _add_pipeline_args(rs)
+    sh = sub.add_parser("show", help="print the summary of a saved handoff file (no API calls)")
+    sh.add_argument("envelope")
     a = ap.parse_args(argv)
+
+    if a.cmd == "show":
+        print(summary(load_envelope(a.envelope), a.envelope))
+        return 0
 
     llm_cache: list = []
 

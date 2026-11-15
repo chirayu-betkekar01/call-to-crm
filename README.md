@@ -42,6 +42,7 @@ python run.py txt samples/acme_discovery_call.txt --hubspot          # + HubSpot
 python run.py txt samples/acme_discovery_call.txt --hubspot --write  # + HubSpot, apply changes
 python run.py fathom --recording-id 123456789 --hubspot --write
 python run.py resume output/<run>/latest.json --hubspot --write      # continue a saved run
+python run.py show   output/<run>/01_buying_role_classification.json # print a saved step, no API calls
 ```
 
 Or run them one at a time:
