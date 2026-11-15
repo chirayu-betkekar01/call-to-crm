@@ -4,6 +4,8 @@ Three AI agents that turn sales-call transcripts into a labeled HubSpot buying g
 really on the call, what role each person plays in the deal, and their contact details, synced to
 the deal automatically.
 
+▶ **[Watch the walkthrough video](https://drive.google.com/file/d/1LnM_1xb4E-TdySxOHEy3QspwrKayqj1M/view?usp=sharing)**
+
 Reps take calls with several stakeholders, but only the person they invited ends up in the CRM.
 The decision maker who joined from a conference room, or was only mentioned ("I'll need to run it
 by Mark"), is never logged, and nobody labels buying roles by hand. These agents rebuild the
