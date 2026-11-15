@@ -1,6 +1,8 @@
-# Buying Group Agents
+# Call-to-CRM Agent Pipeline
 
-Three AI agents that turn sales-call transcripts into a labeled HubSpot buying group.
+Three AI agents that turn sales-call transcripts into a labeled HubSpot buying group: who was
+really on the call, what role each person plays in the deal, and their contact details, synced to
+the deal automatically.
 
 Reps take calls with several stakeholders, but only the person they invited ends up in the CRM.
 The decision maker who joined from a conference room, or was only mentioned ("I'll need to run it

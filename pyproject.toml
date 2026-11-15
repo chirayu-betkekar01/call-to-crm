@@ -1,7 +1,7 @@
 [project]
-name = "buying-group-agents"
+name = "call-to-crm"
 version = "0.1.0"
-description = "Three AI agents that turn sales-call transcripts into a labeled HubSpot buying group."
+description = "Call-to-CRM Agent Pipeline: three AI agents that turn sales-call transcripts into a labeled HubSpot buying group."
 requires-python = ">=3.10"
 
 [tool.pytest.ini_options]
