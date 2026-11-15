@@ -118,24 +118,6 @@ the fields it needs and fills in its own:
 A step runs only when `next_stage` matches it. If a step fails, the error is recorded in
 `history` and the file is still saved.
 
-## Adding a fourth agent
-
-Subclass `core.Stage`, read and write the envelope, and give it a `name` / `next_stage`:
-
-```python
-from core import HandoffEnvelope, Stage, run_saved
-
-class SlackDigestStage(Stage):
-    name = "slack_digest"
-    next_stage = None
-
-    def run(self, env: HandoffEnvelope) -> HandoffEnvelope:
-        ...  # read env.people[*].buying_roles / enrichment / crm
-        return env
-
-env, path = run_saved("output/<run>/latest.json", [SlackDigestStage()])
-```
-
 ## Tests
 
 ```bash
