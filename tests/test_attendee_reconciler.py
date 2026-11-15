@@ -5,12 +5,13 @@ from pathlib import Path
 
 import pytest
 
-from people_agent import HandoffEnvelope, PeopleExtractionAgent, Pipeline, Stage, load_envelope
-from people_agent.llm import _parse_json
-from people_agent.models import LLMExtraction
-from people_agent.nicknames import first_names_match, split_name
-from people_agent.resolver import resolve
-from people_agent.sources import FathomSource, TxtSource, meeting_to_transcript, parse_txt
+from agents.attendee_reconciler import PeopleExtractionAgent
+from core import HandoffEnvelope, Pipeline, Stage, load_envelope
+from core.llm import _parse_json
+from core.models import LLMExtraction
+from agents.attendee_reconciler.nicknames import first_names_match, split_name
+from agents.attendee_reconciler.resolver import resolve
+from agents.attendee_reconciler.sources import FathomSource, TxtSource, meeting_to_transcript, parse_txt
 
 SAMPLES = Path(__file__).resolve().parent.parent / "samples"
 
@@ -237,7 +238,7 @@ class RoutingLLM(FakeLLM):
 
 
 def test_pipeline_end_to_end_handoff(tmp_path):
-    from people_agent import BuyingRoleStage
+    from agents.role_classifier import BuyingRoleStage
 
     payload = {"company_context": {"internal_company": "Northwind", "external_companies": ["Acme Corp"]},
                "people": [_p("Jordan Pierce", aliases=["Jordan", "Acme Conf Room B"], title="SDR team lead",

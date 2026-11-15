@@ -1,10 +1,11 @@
-"""Stepped-agent pipeline and the handoff between agents.
+"""The handoff between agents.
 
-    Transcript --[PeopleExtractionAgent]--> envelope --[Stage: buying_role_classification]--> envelope --[Stage: contact_enrichment]--> ...
+    Transcript --[Agent 1: extractor]--> envelope --[Agent 2 stage]--> envelope --[Agent 3 stages]--> ...
 
-Every downstream agent is a `Stage`: it takes the HandoffEnvelope, returns an updated one,
-and sets `next_stage`. Each envelope is written to disk after every stage, so any stage can
-also be run on its own later from the saved JSON (`HandoffEnvelope.model_validate_json`).
+Agent 1 is an *extractor* (Transcript -> HandoffEnvelope). Every later agent is one or more
+`Stage`s (HandoffEnvelope -> HandoffEnvelope) that set `next_stage`. The envelope is written to
+disk after every step, so each agent can also run on its own from a saved file (`run_saved`).
+Agents never import each other, only `core`.
 """
 from __future__ import annotations
 
@@ -13,10 +14,17 @@ import re
 from abc import ABC, abstractmethod
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Callable, Iterable, Optional
+from typing import Callable, Iterable, Optional, Protocol
 
-from .extractor import PeopleExtractionAgent
 from .models import HandoffEnvelope, StageRecord, Transcript
+
+
+class Extractor(Protocol):
+    """Agent 1's interface: turns a transcript into the first envelope."""
+
+    name: str
+
+    def extract(self, t: Transcript) -> HandoffEnvelope: ...
 
 
 def _now() -> str:
@@ -53,7 +61,7 @@ def _slug(text: str) -> str:
 class Pipeline:
     def __init__(
         self,
-        extractor: Optional[PeopleExtractionAgent],
+        extractor: Optional[Extractor],
         stages: Iterable[Stage] = (),
         output_dir: str | Path = "output",
         on_handoff: Optional[Callable[[HandoffEnvelope, Path], None]] = None,
@@ -133,3 +141,12 @@ class Pipeline:
 def load_envelope(path: str | Path) -> HandoffEnvelope:
     """For the next agent: pick up a saved handoff file."""
     return HandoffEnvelope.model_validate(json.loads(Path(path).read_text(encoding="utf-8")))
+
+
+def run_saved(source: str | Path | HandoffEnvelope, stages: list[Stage], output_dir: str | Path = "output",
+              start: Optional[str] = None) -> tuple[HandoffEnvelope, Path]:
+    """Run `stages` on a saved handoff file (or envelope), starting at `start` (default: the first stage).
+    This is how agents 2 and 3 run on their own."""
+    env = source if isinstance(source, HandoffEnvelope) else load_envelope(source)
+    env.next_stage = start or (stages[0].name if stages else env.next_stage)
+    return Pipeline(None, stages=stages, output_dir=output_dir).resume(env)

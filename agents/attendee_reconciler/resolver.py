@@ -13,7 +13,7 @@ from __future__ import annotations
 import hashlib
 from typing import Optional
 
-from .models import Attendee, LLMExtraction, LLMPerson, Person, Transcript
+from core.models import Attendee, LLMExtraction, LLMPerson, Person, Transcript
 from .nicknames import first_names_match, last_names_match, normalize, split_name
 
 _TITLE_RANK = {"attendee_list": 4, "stated_by_self": 4, "stated_by_other": 3, "inferred": 1, "none": 0}

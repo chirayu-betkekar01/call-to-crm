@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from dotenv import load_dotenv  # noqa: E402
 
-from people_agent.hubspot import HubSpotClient  # noqa: E402
+from agents.enrichment_sync.hubspot import HubSpotClient  # noqa: E402
 
 DOMAIN = "acmecorp.com"
 COMPANY = {"name": "Acme Corp", "domain": DOMAIN}

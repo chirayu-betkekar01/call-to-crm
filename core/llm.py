@@ -5,9 +5,19 @@ import json
 import os
 import re
 import time
-from typing import Any, Optional
+from typing import Any, Optional, Protocol
 
 import requests
+
+
+class JSONModel(Protocol):
+    """What an agent needs from an LLM: JSON that matches a schema. OpenRouterClient implements it;
+    tests use fakes."""
+
+    model: str
+    last_usage: dict
+
+    def complete_json(self, system: str, user: str, schema: dict, schema_name: str = ..., max_tokens: int = ...) -> dict: ...
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 DEFAULT_MODEL = "anthropic/claude-sonnet-5.5"

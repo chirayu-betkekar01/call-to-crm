@@ -5,11 +5,12 @@ from pathlib import Path
 
 import pytest
 
-from people_agent import ContactEnrichmentStage, HandoffEnvelope, HubSpotClient, HubSpotSyncStage, MockEnricher
-from people_agent.enrich import ApolloEnricher, EnrichError, EnrichQuery, EnrichResult, anchor_domains
-from people_agent.models import CompanyContext, Evidence, LLMExtraction, RoleAssignment, SourceRef
-from people_agent.resolver import resolve
-from people_agent.sources import TxtSource
+from agents.enrichment_sync import ContactEnrichmentStage, HubSpotClient, HubSpotSyncStage, MockEnricher
+from core import HandoffEnvelope
+from agents.enrichment_sync.enrich import ApolloEnricher, EnrichError, EnrichQuery, EnrichResult, anchor_domains
+from core.models import CompanyContext, Evidence, LLMExtraction, RoleAssignment, SourceRef
+from agents.attendee_reconciler.resolver import resolve
+from agents.attendee_reconciler.sources import TxtSource
 
 SAMPLES = Path(__file__).resolve().parent.parent / "samples"
 
@@ -343,7 +344,7 @@ def test_deal_override():
 
 # ----------------------------------------------------------- HTTP client
 def test_client_builds_requests_and_retries(monkeypatch):
-    monkeypatch.setattr("people_agent.hubspot.time.sleep", lambda s: None)
+    monkeypatch.setattr("agents.enrichment_sync.hubspot.time.sleep", lambda s: None)
     s = _Session([_Resp(429), _Resp(200, {"results": [{"id": "1"}]}), _Resp(404), _Resp(403, {"x": 1})])
     c = HubSpotClient(token="t", session=s)
     assert c.search("contacts", {"email": "a@b.com"}, ["email"]) == [{"id": "1"}]

@@ -1,5 +1,9 @@
-"""System prompt and output schema for the people-extraction step."""
+"""Agent 1 system prompt and output schema."""
 from __future__ import annotations
+
+from core.schemas import EVIDENCE_SCHEMA as _EVIDENCE
+from core.schemas import SIDE_SCHEMA as _SIDE
+from core.schemas import nullable as _nullable
 
 SYSTEM_PROMPT = """\
 You are the People Extraction agent, step 1 of a GTM pipeline. You read a sales-call \
@@ -66,19 +70,6 @@ Other fields
 
 Return only the JSON object required by the schema."""
 
-
-def _nullable(t: str) -> dict:
-    return {"type": [t, "null"]}
-
-
-_EVIDENCE = {
-    "type": "object",
-    "additionalProperties": False,
-    "required": ["timestamp", "speaker", "quote"],
-    "properties": {"timestamp": _nullable("string"), "speaker": _nullable("string"), "quote": {"type": "string"}},
-}
-
-_SIDE = {"type": "string", "enum": ["internal", "external", "unknown"]}
 
 OUTPUT_SCHEMA: dict = {
     "type": "object",

@@ -161,9 +161,9 @@ recently changed jobs. Also: FullEnrich ran out of credits partway through and h
 |---|---|---|
 | Language | TypeScript / Node | Python |
 | LLM access | Anthropic API directly | OpenRouter (`anthropic/claude-sonnet-5.5`) |
-| Agent 1 | Built | **Built.** Nickname merging, bot and speaker-label handling, attendee matching, mentioned-only people, invented emails dropped, `needs_review` flags, fictional people excluded (`prompts.py:21`). Also does batch Fathom ingestion (`--since`, `--limit`). |
-| Agent 2 | Separate behavioral classifier, buyer side only, several roles per person | **Built** (`people_agent/roles.py`, `BuyingRoleStage`). The rubric can be configured, evidence quotes are checked against the transcript, and roles below a confidence threshold are dropped. Re-run on a saved file with `python run.py roles <file>`. |
-| Agent 3 | FullEnrich + HubSpot upsert + deal labels | **Built.** `enrich.py` has pluggable providers: a free mock (the default, since this is a portfolio project) and Apollo, replacing FullEnrich. `hubspot.py` does the sync: dry run by default, never overwrites values, never creates deals, finds deals through HubSpot associations, and creates missing labels. Not yet run against a live HubSpot portal. |
+| Agent 1 | Built | **Built.** Nickname merging, bot and speaker-label handling, attendee matching, mentioned-only people, invented emails dropped, `needs_review` flags, fictional people excluded (`agents/attendee_reconciler/prompts.py`). Also does batch Fathom ingestion (`--since`, `--limit`). |
+| Agent 2 | Separate behavioral classifier, buyer side only, several roles per person | **Built** (`agents/role_classifier/`). The rubric can be configured (`rubric.py`), evidence quotes are checked against the transcript, and roles below a confidence threshold are dropped. Run it alone with `python -m agents.role_classifier <file>`. |
+| Agent 3 | FullEnrich + HubSpot upsert + deal labels | **Built** (`agents/enrichment_sync/`). Pluggable providers replace FullEnrich: a free mock (default), Hunter (free plan) and Apollo (paid). The HubSpot sync is a dry run by default, never overwrites values, never creates deals, finds deals through HubSpot associations, and creates missing labels. Verified live against a HubSpot test portal on 2026-11-14. |
 | Handoff | JSON from one agent to the next | `HandoffEnvelope` v1.0 with one `NN_<stage>.json` per stage |
 
 Suggested next steps:

@@ -1,4 +1,4 @@
-"""Stage 3b: HubSpot Sync.
+"""Agent 3, step B - HubSpot Sync.
 
 For every in-scope buyer-side person (from contact_enrichment):
   1. find the company by domain (create it if missing)
@@ -25,9 +25,8 @@ from typing import Iterable, Optional
 
 import requests
 
-from .models import HandoffEnvelope, Person
-from .pipeline import Stage
-from .roles import ROLE_LIBRARY
+from core.models import HandoffEnvelope, Person
+from core.pipeline import Stage
 
 HUBSPOT_BASE = "https://api.hubapi.com"
 CONTACT_TO_DEAL_DEFAULT = {"associationCategory": "HUBSPOT_DEFINED", "associationTypeId": 4}
@@ -151,7 +150,12 @@ class HubSpotSyncStage(Stage):
         # A dry run doesn't finish the pipeline: leave next_stage pointing here so `resume --write` works.
         self.next_stage = None if write else self.name
         self.deal_id = str(deal_id) if deal_id else None
-        self.role_labels = role_labels or {k: r.label for k, r in ROLE_LIBRARY.items()}
+        # Role key -> HubSpot label. Default: title case (decision_maker -> "Decision Maker"), which matches
+        # Agent 2's rubric labels without importing Agent 2.
+        self.role_labels = role_labels or {}
+
+    def label_for(self, role: str) -> str:
+        return self.role_labels.get(role) or role.replace("_", " ").title()
 
     # -- run ----------------------------------------------------------------
     def run(self, env: HandoffEnvelope) -> HandoffEnvelope:
@@ -327,7 +331,7 @@ class HubSpotSyncStage(Stage):
             return {(l.get("label") or "").strip().lower(): l for l in self.client.labels("contacts", "deals")}
 
         existing = by_label()
-        wanted = {role: self.role_labels.get(role, role.replace("_", " ").title()) for role in sorted(roles)}
+        wanted = {role: self.label_for(role) for role in sorted(roles)}
         missing = [r for r, label in wanted.items() if label.lower() not in existing]
         if missing and self.write:
             # Creating a label returns BOTH directions (contact->deal and deal->contact), so don't trust
@@ -352,7 +356,7 @@ class HubSpotSyncStage(Stage):
         roles = {r.role for p in people for r in p.buying_roles}
         types = self._ensure_labels(roles) if roles else {}
         for p in people:
-            labels = [types[r.role]["label"] if r.role in types else self.role_labels.get(r.role, r.role)
+            labels = [types[r.role]["label"] if r.role in types else self.label_for(r.role)
                       for r in p.buying_roles]
             body = [CONTACT_TO_DEAL_DEFAULT] + [
                 {k: v for k, v in types[r.role].items() if k != "label"} for r in p.buying_roles if r.role in types]

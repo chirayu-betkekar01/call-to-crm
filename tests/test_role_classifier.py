@@ -5,11 +5,12 @@ from pathlib import Path
 
 import pytest
 
-from people_agent import BuyingRoleStage, HandoffEnvelope, Pipeline, load_envelope
-from people_agent.models import CompanyContext, LLMExtraction, SourceRef
-from people_agent.resolver import resolve
-from people_agent.roles import _norm, quote_in_transcript
-from people_agent.sources import TxtSource
+from agents.role_classifier import BuyingRoleStage
+from core import HandoffEnvelope, Pipeline, load_envelope
+from core.models import CompanyContext, LLMExtraction, SourceRef
+from agents.attendee_reconciler.resolver import resolve
+from agents.role_classifier.agent import _norm, quote_in_transcript
+from agents.attendee_reconciler.sources import TxtSource
 
 SAMPLES = Path(__file__).resolve().parent.parent / "samples"
 

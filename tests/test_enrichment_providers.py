@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import pytest
 
-from people_agent.enrich import EnrichError, EnrichQuery, HunterEnricher, make_enricher
+from agents.enrichment_sync.providers import EnrichError, EnrichQuery, HunterEnricher, make_enricher
 
 
 class _Resp:
@@ -52,7 +52,7 @@ def test_hunter_skips_first_name_only_without_spending_a_credit():
 
 
 def test_hunter_not_found_and_errors(monkeypatch):
-    monkeypatch.setattr("people_agent.enrich.time.sleep", lambda s: None)
+    monkeypatch.setattr("agents.enrichment_sync.providers.hunter.time.sleep", lambda s: None)
     assert HunterEnricher.map_response({"data": {"email": None}}) is None
     assert HunterEnricher(api_key="k", session=_Session([_Resp(404, {})])).enrich(Q) is None
     with pytest.raises(EnrichError, match="HUNTER_API_KEY"):

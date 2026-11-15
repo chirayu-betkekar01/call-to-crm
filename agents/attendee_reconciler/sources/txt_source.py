@@ -22,7 +22,7 @@ import re
 from pathlib import Path
 from typing import Iterable, Iterator
 
-from ..models import Attendee, Transcript, Utterance
+from core.models import Attendee, Transcript, Utterance
 
 _HEADER_KEY = re.compile(r"^\s*([A-Za-z][A-Za-z _-]{1,30}):\s*(.*)$")
 _ATTENDEE = re.compile(

@@ -13,7 +13,7 @@ from typing import Any, Iterable, Iterator, Optional
 
 import requests
 
-from ..models import Attendee, Transcript, Utterance
+from core.models import Attendee, Transcript, Utterance
 
 BASE_URL = "https://api.fathom.ai/external/v1"
 

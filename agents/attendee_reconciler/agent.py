@@ -1,18 +1,12 @@
-"""The People Extraction agent: Transcript -> HandoffEnvelope."""
+"""Agent 1 - Attendee Reconciler: Transcript -> HandoffEnvelope (who was really on / named in the call)."""
 from __future__ import annotations
 
-from typing import Optional, Protocol
+from typing import Optional
 
-from .models import HandoffEnvelope, LLMExtraction, SourceRef, Transcript
+from core.llm import JSONModel
+from core.models import HandoffEnvelope, LLMExtraction, SourceRef, Transcript
 from .prompts import OUTPUT_SCHEMA, SYSTEM_PROMPT
 from .resolver import resolve
-
-
-class JSONModel(Protocol):
-    model: str
-    last_usage: dict
-
-    def complete_json(self, system: str, user: str, schema: dict, schema_name: str = ..., max_tokens: int = ...) -> dict: ...
 
 
 class PeopleExtractionAgent:
@@ -52,3 +46,7 @@ class PeopleExtractionAgent:
         if run_id:
             env.run_id = run_id
         return env
+
+
+# Friendlier name matching the agent's role; same class.
+AttendeeReconcilerAgent = PeopleExtractionAgent
