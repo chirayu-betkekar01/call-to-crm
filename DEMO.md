@@ -31,8 +31,9 @@ a label. All are marked `Enrichment Source = mock (demo data)`. Still exactly on
 ## Script
 
 **0:00 – The problem (25 s).** No HubSpot "before" state exists any more, so tell it from the call:
-> "Reps take calls with several stakeholders, but the CRM only knows who was invited. On this call,
-> one person was invited, five people were involved, and the person who signs never joined."
+> "Reps take calls with several stakeholders, but the CRM only knows who was invited. Before this
+> run, the CRM had one Acme contact on the deal. The call involved seven Acme people, and the person
+> who signs never joined."
 
 **0:25 – The transcript (30 s).** Scroll `acme_discovery_call.txt` and point at:
 - line 15: Jordan joins "from the conference room" (not invited)
