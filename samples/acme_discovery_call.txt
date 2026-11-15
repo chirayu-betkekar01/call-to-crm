@@ -1,0 +1,32 @@
+Title: Acme Corp <> Northwind - Discovery Call
+Date: 2026-11-03
+Internal domains: northwind.io
+Attendees:
+- Priya Raman <priya.raman@northwind.io>
+- Daniel Okafor <daniel.okafor@northwind.io>
+- Matthew Collins <matthew.collins@acmecorp.com>
+- Samantha Lee <samantha.lee@acmecorp.com>
+- Rachel Gomez <rachel.gomez@acmecorp.com>
+---
+[00:00:04] Priya Raman: Hi everyone, thanks for making the time. I'm Priya, I'm the account executive here at Northwind, and I've got Dan with me, he's our solutions engineer.
+[00:00:15] Daniel Okafor: Hey folks, good to meet you.
+[00:00:18] Matt: Thanks Priya. I'm Matt Collins, I run revenue operations at Acme, so Director of RevOps. Sam's here too.
+[00:00:26] Samantha Lee: Hi, Sam Lee, I'm a sales ops manager on Matt's team. I'm the one living in the CRM all day.
+[00:00:33] Acme Conf Room B: And this is Jordan, I just jumped in from the conference room. Jordan Pierce, I lead the SDR team, about fourteen reps.
+[00:00:41] Priya Raman: Great, welcome Jordan. So to kick off, what prompted you to take the call?
+[00:00:47] Matt: Honestly our pipeline reporting is a mess. My boss, Mark, he's our VP of Sales, he's been asking for a clean forecast for two quarters now and we can't give it to him.
+[00:01:02] Priya Raman: Is Mark going to be involved in the evaluation?
+[00:01:05] Matt: He'll make the final call, yeah. Mark Davis. He signs anything over fifty K. But he won't sit through a demo until we've shortlisted.
+[00:01:14] Samantha Lee: And realistically the CFO has to bless the budget too, but that's usually a formality if Mark is on board.
+[00:01:22] Daniel Okafor: Got it. On the technical side, who owns your integrations today?
+[00:01:27] Jordan: That would be Bill. Bill Chen, he's on the IT side, sort of our systems architect. He's going to want to review security for sure.
+[00:01:36] Matt: Yeah, William will want the SOC 2 report before anything else. Can you send that over?
+[00:01:41] Priya Raman: Absolutely. I'll have Kevin from our security team send it, Kevin Marsh, he handles all the questionnaires.
+[00:01:49] Samantha Lee: One more thing, our procurement process goes through Liz. Elizabeth Novak. She's slow but thorough, so start early.
+[00:01:58] Matt: Ha, true. Liz has been known to hold things up for a month.
+[00:02:04] Priya Raman: Good to know. And you mentioned you looked at other tools?
+[00:02:09] Jordan: We trialed Clarivue last year. Their rep, I think his name was Tom, was great but the product didn't stick.
+[00:02:17] Matt: Rachel was supposed to join today too, she's our RevOps analyst, but she got pulled into quarter close.
+[00:02:24] Priya Raman: No worries. Next steps then, I'll send a recap, Kevin will get you the SOC 2, and let's set up a demo for Matt, Sam and Jordan next week. Sound good?
+[00:02:34] Matthew Collins: Perfect. And I'll give Mark a heads up.
+[00:02:38] Priya Raman: Great, thanks everyone.
